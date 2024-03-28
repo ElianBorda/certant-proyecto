@@ -6,7 +6,7 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "servicio")
+@Table(name = "SERVICIO")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Servicio {
     private Long precio;

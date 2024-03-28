@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 
 @Entity
+@Table(name = "TURNO")
 public class Turno {
 
     @Id
