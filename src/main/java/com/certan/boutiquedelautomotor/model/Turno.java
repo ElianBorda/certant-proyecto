@@ -15,21 +15,21 @@ public class Turno {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate fechaHora;
-    private String patenteVehiculo;
-    private String nombreCliente;
     @ManyToOne
+    private Cliente cliente;
+    @ManyToMany
     private List<Servicio> serviciosContratados;
-    private Long precioTotal;
+    final private Double precioTotal;
 
-    public Turno(LocalDate fechaHora, String patenteVehiculo, String nombreCliente, ArrayList<Servicio> serviciosContratados) {
-        this.fechaHora            = fechaHora;
-        this.patenteVehiculo      = patenteVehiculo;
-        this.nombreCliente        = nombreCliente;
+    public Turno(ArrayList<Servicio> serviciosContratados, Cliente cliente) {
+        this.cliente              = cliente;
+        this.fechaHora            = LocalDate.now();
         this.serviciosContratados = serviciosContratados;
-        this.precioTotal          = this.preciosDeServicio(serviciosContratados);
+        this.precioTotal          = this.preciosDeServicios(serviciosContratados);
+        this.cliente.agregarTurno(this);
     }
 
-    public Long getPrecioTotal() {
+    public Double getPrecioTotal() {
         return precioTotal;
     }
 
@@ -41,31 +41,16 @@ public class Turno {
         this.fechaHora = fechaHora;
     }
 
-    public String getPatenteVehiculo() {
-        return patenteVehiculo;
-    }
-
-    public void setPatenteVehiculo(String patenteVehiculo) {
-        this.patenteVehiculo = patenteVehiculo;
-    }
 
     public Long getId() {
         return id;
     }
 
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
+    private Double preciosDeServicios(ArrayList<Servicio> serviciosContratados) {
+        return serviciosContratados.stream().map(Servicio::getPrecio).reduce(0.0, Double::sum);
     }
 
-    public String getNombreCliente() {
-        return nombreCliente;
-    }
-
-    public List<Servicio> getServiciosContratados() {
-        return serviciosContratados;
-    }
-
-    private Long preciosDeServicio(ArrayList<Servicio> serviciosContratados) {
-        return (long) serviciosContratados.size();
+    public Integer cantidadDeServicios() {
+        return this.serviciosContratados.size();
     }
 }

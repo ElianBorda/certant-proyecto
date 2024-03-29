@@ -1,7 +1,9 @@
 package com.certan.boutiquedelautomotor.model;
 
 import jakarta.persistence.*;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,21 +16,27 @@ public class Cliente {
     private String nombre;
     private String apellido;
     private String patenteVehiculo;
+
     @OneToMany
-    private List<Servicio> serviciosContratados;
+    private List<Turno> turnosRealizados;
+
+
+    public Cliente() {
+    }
 
     public Cliente(String nombre, String apellido, String patenteVehiculo) {
+        this.turnosRealizados = new ArrayList<>();
         this.nombre = nombre;
         this.apellido = apellido;
-        this.patenteVehiculo = patenteVehiculo;
+        this.patenteVehiculo = ValidadorDePatente.validarPatente(patenteVehiculo);
+    }
+
+    public List<Turno> getTurnosRealizados() {
+        return turnosRealizados;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public List<Servicio> getServiciosContratados() {
-        return serviciosContratados;
     }
 
     public String getNombre() {
@@ -53,5 +61,13 @@ public class Cliente {
 
     public void setPatenteVehiculo(String patenteVehiculo) {
         this.patenteVehiculo = patenteVehiculo;
+    }
+
+    public void agregarTurno(Turno turno) {
+        this.turnosRealizados.add(turno);
+    }
+
+    public int cantidadDeTurnos() {
+        return this.turnosRealizados.size();
     }
 }

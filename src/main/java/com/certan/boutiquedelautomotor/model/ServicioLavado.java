@@ -8,9 +8,9 @@ import jakarta.persistence.Table;
 public class ServicioLavado extends Servicio{
 
     private CategoriaLavado categoriaLavado;
-    public ServicioLavado(Long precio, CategoriaLavado categoriaLavado
+    public ServicioLavado(CategoriaLavado categoriaLavado
     ) {
-        super(precio);
+        super(categoriaLavado.getPrecio());
         this.categoriaLavado = categoriaLavado;
     }
 

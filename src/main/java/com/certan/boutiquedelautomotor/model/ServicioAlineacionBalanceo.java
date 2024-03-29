@@ -5,11 +5,11 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "SERVICIO_ALINEACION_Y_BALANCEO")
-public class SevicioAlineacionBalanceo extends Servicio{
+public class ServicioAlineacionBalanceo extends Servicio{
 
     private Boolean incluyeCambioDeCubiertas;
-    public SevicioAlineacionBalanceo(Long precio, Boolean incluyeCambioDeCubiertas) {
-        super(precio);
+    public ServicioAlineacionBalanceo(Boolean incluyeCambioDeCubiertas) {
+        super(incluyeCambioDeCubiertas ? 900.0 : 400.0);
         this.incluyeCambioDeCubiertas = incluyeCambioDeCubiertas;
     }
 
