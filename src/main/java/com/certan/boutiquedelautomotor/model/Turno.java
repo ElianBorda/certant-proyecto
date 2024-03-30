@@ -17,9 +17,14 @@ public class Turno {
     private LocalDate fechaHora;
     @ManyToOne
     private Cliente cliente;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Servicio> serviciosContratados;
-    final private Double precioTotal;
+    private Double precioTotal;
+
+
+    public Turno(){
+
+    }
 
     public Turno(ArrayList<Servicio> serviciosContratados, Cliente cliente) {
         this.cliente              = cliente;

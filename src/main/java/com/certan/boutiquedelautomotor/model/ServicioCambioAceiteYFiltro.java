@@ -1,15 +1,24 @@
 package com.certan.boutiquedelautomotor.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "SERVICIO_CAMBIO_DE_ACEITE_Y_FILTRO")
 public class ServicioCambioAceiteYFiltro extends Servicio {
 
+    @Enumerated(EnumType.STRING)
     private CategoriaEficacia categoria;
+
+    @Enumerated(EnumType.STRING)
     private Motor motor;
 
+
+    public ServicioCambioAceiteYFiltro(){
+
+    }
     public ServicioCambioAceiteYFiltro(CategoriaEficacia categoria, Motor motor) {
         super(categoria.getPrecio() + motor.getPrecio());
         this.categoria = categoria;

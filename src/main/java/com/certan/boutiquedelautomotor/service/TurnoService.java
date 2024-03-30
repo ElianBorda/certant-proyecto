@@ -1,9 +1,11 @@
 package com.certan.boutiquedelautomotor.service;
 
+import com.certan.boutiquedelautomotor.dao.ClienteDAO;
 import com.certan.boutiquedelautomotor.dao.TurnoDAO;
 import com.certan.boutiquedelautomotor.model.Cliente;
 import com.certan.boutiquedelautomotor.model.Turno;
 import com.certan.boutiquedelautomotor.model.exceptions.LaEntidadNoPoseeIdExeption;
+import com.certan.boutiquedelautomotor.model.exceptions.NoSePuedeRecuperarLaEntidadIdNullException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,17 +18,21 @@ public class TurnoService {
 
     @Autowired
     private TurnoDAO turnoDAO;
-    public Turno crearCliente(Turno turno) {
+
+    public Turno crearTurno(Turno turno) {
         return turnoDAO.save(turno);
     }
 
-    public Turno recuperarCliente(Long id) {
+    public Turno recuperarTurno(Long id) {
+        if (id == null){
+            throw new NoSePuedeRecuperarLaEntidadIdNullException();
+        }
         Optional<Turno> optional = turnoDAO.findById(id);
         return optional.orElse(null);
     }
 
-    public void actualizarCliente(Turno turno) throws LaEntidadNoPoseeIdExeption {
-        if (recuperarCliente(turno.getId()) == null) {
+    public void actualizarTurno(Turno turno) throws LaEntidadNoPoseeIdExeption {
+        if (recuperarTurno(turno.getId()) == null) {
             throw new LaEntidadNoPoseeIdExeption(turno.getClass().getName());
         }
         turnoDAO.save(turno);

@@ -8,6 +8,12 @@ import jakarta.persistence.Table;
 public class ServicioAlineacionBalanceo extends Servicio{
 
     private Boolean incluyeCambioDeCubiertas;
+
+
+    public ServicioAlineacionBalanceo(){
+
+    }
+
     public ServicioAlineacionBalanceo(Boolean incluyeCambioDeCubiertas) {
         super(incluyeCambioDeCubiertas ? 900.0 : 400.0);
         this.incluyeCambioDeCubiertas = incluyeCambioDeCubiertas;

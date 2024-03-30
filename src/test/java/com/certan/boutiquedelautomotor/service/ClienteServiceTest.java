@@ -1,6 +1,7 @@
 package com.certan.boutiquedelautomotor.service;
 
 import com.certan.boutiquedelautomotor.model.Cliente;
+import com.certan.boutiquedelautomotor.model.Servicio;
 import com.certan.boutiquedelautomotor.model.exceptions.LaEntidadNoPoseeIdExeption;
 import com.certan.boutiquedelautomotor.model.exceptions.NoSePuedeRecuperarLaEntidadIdNullException;
 import org.jetbrains.annotations.NotNull;
@@ -77,7 +78,11 @@ public class ClienteServiceTest {
 
     @Test
     void seVerificaQueSiSeQuiereActualizarUnClienteConUnIdQueNoExisteEnLaBaseDeDatosLevantaUnaExcepcion() {
-
+        assertThrows(LaEntidadNoPoseeIdExeption.class, () -> {
+            Cliente clienteConId = clienteService.crearCliente(this.joseRodriguez);
+            this.clienteService.clearAll();
+            clienteService.actualizarCliente(clienteConId);
+        });
     }
 
 

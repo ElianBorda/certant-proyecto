@@ -4,6 +4,7 @@ import com.certan.boutiquedelautomotor.dao.ServicioDAO;
 import com.certan.boutiquedelautomotor.model.Cliente;
 import com.certan.boutiquedelautomotor.model.Servicio;
 import com.certan.boutiquedelautomotor.model.exceptions.LaEntidadNoPoseeIdExeption;
+import com.certan.boutiquedelautomotor.model.exceptions.NoSePuedeRecuperarLaEntidadIdNullException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,17 +17,20 @@ public class ServicioService {
 
     @Autowired
     private ServicioDAO servicioDAO;
-    public Servicio crearCliente(Servicio servicio) {
+    public Servicio crearServicio(Servicio servicio) {
         return servicioDAO.save(servicio);
     }
 
-    public Servicio recuperarCliente(Long id) {
+    public Servicio recuperarServicio(Long id) {
+        if (id == null){
+            throw new NoSePuedeRecuperarLaEntidadIdNullException();
+        }
         Optional<Servicio> optional = servicioDAO.findById(id);
         return optional.orElse(null);
     }
 
-    public void actualizarCliente(Servicio servicio) throws LaEntidadNoPoseeIdExeption {
-        if (recuperarCliente(servicio.getId()) == null) {
+    public void actualizarServicio(Servicio servicio) throws LaEntidadNoPoseeIdExeption {
+        if (recuperarServicio(servicio.getId()) == null) {
             throw new LaEntidadNoPoseeIdExeption(servicio.getClass().getName());
         }
         servicioDAO.save(servicio);

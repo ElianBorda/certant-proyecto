@@ -17,7 +17,7 @@ public class Cliente {
     private String apellido;
     private String patenteVehiculo;
 
-    @OneToMany
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Turno> turnosRealizados;
 
 
