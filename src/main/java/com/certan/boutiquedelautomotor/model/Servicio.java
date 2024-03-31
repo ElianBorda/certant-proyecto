@@ -14,10 +14,28 @@ public class Servicio {
     private Long id;
     private Double precio;
 
-    public Servicio(Double precio) {
+    private String nombreServicio;
+
+    @ManyToOne
+    private Turno turno;
+
+    public Servicio(Double precio, String nombreServicio) {
         this.precio = precio;
+        this.nombreServicio = nombreServicio;
     }
     public Servicio() {}
+
+    public void setTurno(Turno turno) {
+        this.turno = turno;
+    }
+
+    public String getNombreServicio() {
+        return nombreServicio;
+    }
+
+    public Turno getTurno() {
+        return turno;
+    }
 
     public Long getId() {
         return id;

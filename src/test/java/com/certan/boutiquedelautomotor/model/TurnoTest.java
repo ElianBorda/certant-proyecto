@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class TurnoTest {
         this.servicios.add(this.alineacionYBalanceo);
         this.servicios.add(this.cambioDeAceite);
 
-        this.turno = new Turno(this.servicios, this.ramonGalarza);
+        this.turno = new Turno(LocalDateTime.now(),this.servicios, this.ramonGalarza);
     }
 
     @Test
@@ -43,7 +44,7 @@ public class TurnoTest {
         ArrayList<Servicio> servicios =  new ArrayList<>();
         servicios.add(this.alineacionYBalanceo);
 
-        Turno turno = new Turno(servicios, this.joseRodriguez);
+        Turno turno = new Turno(LocalDateTime.now(), servicios, this.joseRodriguez);
 
         assertEquals(turno.cantidadDeServicios(), 1);
         assertEquals(this.joseRodriguez.cantidadDeTurnos(), 1);

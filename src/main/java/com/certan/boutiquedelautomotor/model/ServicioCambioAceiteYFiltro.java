@@ -20,7 +20,7 @@ public class ServicioCambioAceiteYFiltro extends Servicio {
 
     }
     public ServicioCambioAceiteYFiltro(CategoriaEficacia categoria, Motor motor) {
-        super(categoria.getPrecio() + motor.getPrecio());
+        super(categoria.getPrecio() + motor.getPrecio(), "Servicio de Cambio de Aceite y Filtro");
         this.categoria = categoria;
         this.motor     = motor;
     }

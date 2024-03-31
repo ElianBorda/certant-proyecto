@@ -17,7 +17,7 @@ public class ServicioLavado extends Servicio{
     }
     public ServicioLavado(CategoriaLavado categoriaLavado
     ) {
-        super(categoriaLavado.getPrecio());
+        super(categoriaLavado.getPrecio(), "Servicio de lavado");
         this.categoriaLavado = categoriaLavado;
     }
 

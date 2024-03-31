@@ -15,7 +15,7 @@ public class ServicioAlineacionBalanceo extends Servicio{
     }
 
     public ServicioAlineacionBalanceo(Boolean incluyeCambioDeCubiertas) {
-        super(incluyeCambioDeCubiertas ? 900.0 : 400.0);
+        super(incluyeCambioDeCubiertas ? 900.0 : 400.0, "Servicio de Alineacion y Balanceo");
         this.incluyeCambioDeCubiertas = incluyeCambioDeCubiertas;
     }
 

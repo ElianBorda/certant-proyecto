@@ -10,7 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,6 +35,8 @@ public class TurnoServicesTest {
     private Servicio cambioDeAceite;
     private ArrayList<Servicio> servicios;
     private Turno turno;
+    private Turno turno2;
+    private List<Servicio> servicios2;
 
 
     @BeforeEach
@@ -41,14 +45,17 @@ public class TurnoServicesTest {
         this.ramonGalarza        = this.clienteService.crearCliente(new Cliente("Ramon", "Galarza", "EIA293"));
         this.joseRodriguez       = this.clienteService.crearCliente(new Cliente("Jose", "Rodriguez", "AA111AA"));
 
-        this.alineacionYBalanceo = this.servicioService.crearServicio(new ServicioAlineacionBalanceo(true));
-        this.cambioDeAceite      = this.servicioService.crearServicio(new ServicioCambioAceiteYFiltro(CategoriaEficacia.ALTO_RENDIMIENTO, Motor.NAFTEROS));
+        this.alineacionYBalanceo = new ServicioAlineacionBalanceo(true);
+        this.cambioDeAceite      = new ServicioCambioAceiteYFiltro(CategoriaEficacia.ALTO_RENDIMIENTO, Motor.NAFTEROS);
+
 
         this.servicios           = new ArrayList<>();
         this.servicios.add(this.alineacionYBalanceo);
-        this.servicios.add(this.cambioDeAceite);
+        this.servicios2          = new ArrayList<>();
+        this.servicios2.add(this.cambioDeAceite);
 
-        this.turno = new Turno(this.servicios, this.ramonGalarza);
+        this.turno = new Turno(LocalDateTime.of(2023,05,15,15,12), this.servicios, this.ramonGalarza);
+        this.turno2 = new Turno(LocalDateTime.of(2023,07,15,15,12), this.servicios2, this.joseRodriguez);
 
     }
 
@@ -70,6 +77,15 @@ public class TurnoServicesTest {
     }
 
     @Test
+    void seVerificaQueSePudeRecuperarTodosLosElementosDeLaBaseDeDatos(){
+        this.turnoService.crearTurno(this.turno);
+        this.turnoService.crearTurno(this.turno2);
+
+        List<Turno> turnos = this.turnoService.recuperarTodosLosTurnos();
+        assertEquals(turnos.size(), 2);
+    }
+
+    @Test
     void seVerificaQueSiSeQuiereRecuperarUnTurnoConUnIdNullLevantaUnaExcepcion() {
         assertThrows(NoSePuedeRecuperarLaEntidadIdNullException.class, () -> {
             turnoService.recuperarTurno(null);
@@ -79,7 +95,7 @@ public class TurnoServicesTest {
     @Test
     void seVerificaQueSePuedeActualizaUnTurnoEnLaBaseDeDatos(){
 
-        LocalDate fecha = LocalDate.of(2003, 2, 21);
+        LocalDateTime fecha = LocalDateTime.of(2024, 3, 12, 23, 32);
         Turno turnoGuardado = this.turnoService.crearTurno(this.turno);
         assertNotEquals(turnoGuardado.getFechaHora(), fecha);
 

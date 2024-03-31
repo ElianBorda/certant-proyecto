@@ -1,5 +1,6 @@
 package com.certan.boutiquedelautomotor.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,6 +18,7 @@ public class Cliente {
     private String apellido;
     private String patenteVehiculo;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Turno> turnosRealizados;
 
@@ -30,6 +32,12 @@ public class Cliente {
         this.apellido = apellido;
         this.patenteVehiculo = ValidadorDePatente.validarPatente(patenteVehiculo);
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
 
     public List<Turno> getTurnosRealizados() {
         return turnosRealizados;
