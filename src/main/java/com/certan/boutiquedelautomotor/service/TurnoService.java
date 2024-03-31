@@ -21,8 +21,18 @@ public class TurnoService {
     @Autowired
     private TurnoDAO turnoDAO;
 
+    @Autowired
+    private ClienteDAO clienteDAO;
+
     public Turno crearTurno(Turno turno) {
-        return turnoDAO.save(turno);
+        Turno turnoCreado = turnoDAO.save(turno);
+        Boolean esPremium = turnoDAO.esPremium(turnoCreado.getCliente().getId());
+
+        if (esPremium){
+            turnoCreado.getCliente().setEsPremium(true);
+            clienteDAO.save(turnoCreado.getCliente());
+        }
+        return turnoCreado;
     }
 
     public Turno recuperarTurno(Long id) {
@@ -40,6 +50,9 @@ public class TurnoService {
         turnoDAO.save(turno);
     }
 
+    public Boolean elClienteEsPremium(Cliente cliente){
+        return turnoDAO.esPremium(cliente.getId());
+    }
     public List<Turno> recuperarTodosLosTurnos(){
         return (List<Turno>) turnoDAO.findAll();
     }

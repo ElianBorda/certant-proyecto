@@ -37,6 +37,9 @@ public class TurnoServicesTest {
     private Turno turno;
     private Turno turno2;
     private List<Servicio> servicios2;
+    private ArrayList<Servicio> servicios3;
+    private Cliente clientePremium;
+    private Turno turno3;
 
 
     @BeforeEach
@@ -44,6 +47,7 @@ public class TurnoServicesTest {
 
         this.ramonGalarza        = this.clienteService.crearCliente(new Cliente("Ramon", "Galarza", "EIA293"));
         this.joseRodriguez       = this.clienteService.crearCliente(new Cliente("Jose", "Rodriguez", "AA111AA"));
+        this.clientePremium       = this.clienteService.crearCliente(new Cliente("Miguel", "Balbuena", "AFS224"));
 
         this.alineacionYBalanceo = new ServicioAlineacionBalanceo(true);
         this.cambioDeAceite      = new ServicioCambioAceiteYFiltro(CategoriaEficacia.ALTO_RENDIMIENTO, Motor.NAFTEROS);
@@ -53,9 +57,17 @@ public class TurnoServicesTest {
         this.servicios.add(this.alineacionYBalanceo);
         this.servicios2          = new ArrayList<>();
         this.servicios2.add(this.cambioDeAceite);
+        this.servicios3          = new ArrayList<>();
+        this.servicios3.add(new ServicioCambioAceiteYFiltro(CategoriaEficacia.ALTO_RENDIMIENTO, Motor.NAFTEROS));
+        this.servicios3.add(new ServicioCambioAceiteYFiltro(CategoriaEficacia.ALTO_RENDIMIENTO, Motor.NAFTEROS));
+        this.servicios3.add(new ServicioCambioAceiteYFiltro(CategoriaEficacia.ALTO_RENDIMIENTO, Motor.NAFTEROS));
+        this.servicios3.add(new ServicioCambioAceiteYFiltro(CategoriaEficacia.ALTO_RENDIMIENTO, Motor.NAFTEROS));
+        this.servicios3.add(new ServicioCambioAceiteYFiltro(CategoriaEficacia.ALTO_RENDIMIENTO, Motor.NAFTEROS));
 
         this.turno = new Turno(LocalDateTime.of(2023,05,15,15,12), this.servicios, this.ramonGalarza);
         this.turno2 = new Turno(LocalDateTime.of(2023,07,15,15,12), this.servicios2, this.joseRodriguez);
+        this.turno3 = new Turno(LocalDateTime.of(2021,03,15,15,12), this.servicios3, this.clientePremium);
+
 
     }
 
@@ -117,10 +129,29 @@ public class TurnoServicesTest {
         });
     }
 
+    @Test
+    void seVerificaQueUnClienteDadoNoEsPremiumPorqueTieneMenosDe5Servicios(){
+        Turno turno = this.turnoService.crearTurno(this.turno);
+        this.turnoService.crearTurno(this.turno2);
+
+
+        assertFalse(this.turnoService.elClienteEsPremium(turno.getCliente()));
+    }
+
+    @Test
+    void seVerificaQueUnClienteDadoEsPremiumPorqueTieneMasDe5Servicios(){
+        Turno turno = this.turnoService.crearTurno(this.turno3);
+        this.turnoService.crearTurno(this.turno2);
+
+
+        assertTrue(this.turnoService.elClienteEsPremium(turno.getCliente()));
+        assertTrue(turno.getCliente().getEsPremium());
+    }
+
     @AfterEach
     void tearDown(){
-        this.turnoService.clearAll();
+        /*this.turnoService.clearAll();
         this.clienteService.clearAll();
-        this.servicioService.clearAll();
+        this.servicioService.clearAll();*/
     }
 }

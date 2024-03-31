@@ -27,4 +27,13 @@ public class TurnoControllerREST {
                 .map(TurnoDTO::desdeModelo)
                 .collect(Collectors.toList());
     };
+
+    @GetMapping("/premium")
+    private List<TurnoDTO> obtenerTodosLosTurno2s(){
+        List<Turno> turnos = turnoService.recuperarTodosLosTurnos();
+        return turnos.stream()
+                .map(TurnoDTO::desdeModelo)
+                .collect(Collectors.toList());
+    };
+
 }

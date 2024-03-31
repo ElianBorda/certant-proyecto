@@ -5,7 +5,9 @@ import com.certan.boutiquedelautomotor.model.Servicio;
 import com.certan.boutiquedelautomotor.model.Turno;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TurnoDTO {
@@ -22,9 +24,13 @@ public class TurnoDTO {
     @JsonProperty("precioTotal")
     private Double precioTotal;
 
+    @JsonProperty("serviciosContratados")
+    private List<Servicio> serviciosContratados;
 
-    public TurnoDTO(Long id, Cliente cliente, LocalDateTime fechaHora, Double precioTotal) {
+
+    public TurnoDTO(Long id, Cliente cliente, LocalDateTime fechaHora, Double precioTotal, List<Servicio>serviciosContratados) {
         this.id = id;
+        this.serviciosContratados = serviciosContratados;
         this.cliente = cliente;
         this.fechaHora = fechaHora;
         this.precioTotal = precioTotal;
@@ -35,7 +41,8 @@ public class TurnoDTO {
                 turno.getId(),
                 turno.getCliente(),
                 turno.getFechaHora(),
-                turno.getPrecioTotal()
+                turno.getPrecioTotal(),
+                turno.getServiciosContratados()
                 );
     }
 
@@ -45,6 +52,7 @@ public class TurnoDTO {
         turno.setCliente(this.cliente);
         turno.setFechaHora(this.fechaHora);
         turno.setPrecioTotal(this.precioTotal);
+        turno.setServiciosContratados(this.serviciosContratados);
         return turno;
     }
 }

@@ -2,6 +2,7 @@ package com.certan.boutiquedelautomotor.service;
 
 import com.certan.boutiquedelautomotor.dao.ClienteDAO;
 import com.certan.boutiquedelautomotor.model.Cliente;
+import com.certan.boutiquedelautomotor.model.Servicio;
 import com.certan.boutiquedelautomotor.model.exceptions.LaEntidadNoPoseeIdExeption;
 import com.certan.boutiquedelautomotor.model.exceptions.NoSePuedeRecuperarLaEntidadIdNullException;
 import jakarta.transaction.Transactional;
@@ -9,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,6 +39,10 @@ public class ClienteService {
         } else {
             clienteDAO.save(cliente);
         }
+    }
+
+    public List<Cliente> recuperarTodosLosClientes(){
+        return (List<Cliente>) clienteDAO.findAll();
     }
 
     public void clearAll(){

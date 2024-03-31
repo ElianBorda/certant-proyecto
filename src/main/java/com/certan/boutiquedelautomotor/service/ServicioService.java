@@ -38,6 +38,11 @@ public class ServicioService {
         servicioDAO.save(servicio);
     }
 
+    public List<Servicio> recuperarTodosLosServicios(){
+        return (List<Servicio>) servicioDAO.findAll();
+    }
+
+
     public void clearAll(){
         servicioDAO.deleteAll();
     }

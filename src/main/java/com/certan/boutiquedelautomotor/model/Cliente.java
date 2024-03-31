@@ -18,6 +18,8 @@ public class Cliente {
     private String apellido;
     private String patenteVehiculo;
 
+    private Boolean esPremium;
+
     @JsonIgnore
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Turno> turnosRealizados;
@@ -31,6 +33,7 @@ public class Cliente {
         this.nombre = nombre;
         this.apellido = apellido;
         this.patenteVehiculo = ValidadorDePatente.validarPatente(patenteVehiculo);
+        this.esPremium = false;
     }
 
     public void setId(Long id) {
@@ -77,5 +80,13 @@ public class Cliente {
 
     public int cantidadDeTurnos() {
         return this.turnosRealizados.size();
+    }
+
+    public Boolean getEsPremium() {
+        return esPremium;
+    }
+
+    public void setEsPremium(Boolean esPremium) {
+        this.esPremium = esPremium;
     }
 }

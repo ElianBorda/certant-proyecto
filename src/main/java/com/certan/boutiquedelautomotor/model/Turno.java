@@ -1,5 +1,6 @@
 package com.certan.boutiquedelautomotor.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -20,6 +21,7 @@ public class Turno {
     @ManyToOne
     private Cliente cliente;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "turno", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Servicio> serviciosContratados;
     private Double precioTotal;

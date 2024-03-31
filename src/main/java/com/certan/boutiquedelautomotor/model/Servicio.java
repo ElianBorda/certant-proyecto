@@ -1,5 +1,6 @@
 package com.certan.boutiquedelautomotor.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class Servicio {
 
     private String nombreServicio;
 
+    @JsonIgnore
     @ManyToOne
     private Turno turno;
 
@@ -43,6 +45,14 @@ public class Servicio {
 
     public Double getPrecio() {
         return precio;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNombreServicio(String nombreServicio) {
+        this.nombreServicio = nombreServicio;
     }
 
     public void setPrecio(Double precio) {
